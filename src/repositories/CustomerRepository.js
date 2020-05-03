@@ -54,9 +54,16 @@ export class CustomerRepository {
         return customer;
     }
 
-    async updateCustomer(customer, name, surname, phone, email, photo, password) {
-        
-        const customerRaw = await this._pool.query('UPDATE public."customer" SET name=$2, surname=$3, phone=$4, email=$5, photo=$6, password=$7 WHERE id=$1 RETURNING *;', [customer.id, name, surname, phone, email, photo, password]);
+    async updateCustomer(customer) {
+
+        const customerRaw = await this._pool.query('UPDATE public."customer" SET name=$2, surname=$3, phone=$4, email=$5, photo=$6 WHERE id=$1 RETURNING *;', [
+            customer.id,
+            customer.name,
+            customer.surname,
+            customer.phone,
+            customer.email,
+            customer.photo
+        ]);
 
         console.log(customerRaw);
 

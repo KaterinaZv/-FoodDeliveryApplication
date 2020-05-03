@@ -35,6 +35,10 @@ class Customer {
     return this._password;
   }
 
+  get photo() {
+    return this._photo;
+  }
+
   get name() {
     return this._name;
   }
@@ -53,6 +57,10 @@ class Customer {
 
   set phone(newValue) {
     this._phone = newValue;
+  }
+
+  set photo(newValue) {
+    this._photo = newValue;
   }
 
   set email(newValue) {

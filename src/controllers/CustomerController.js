@@ -49,31 +49,23 @@ class CustomerController {
             if (id) {
                 const customerInDataBase = await this.customerRepository.getCustomerById(id);
 
-                const customerReqKey = Object.keys(customerRequest);
-                for (var i = 0, l = customerReqKey.length; i < l; i++) {
-                    for (let key in customerInDataBase) {
-                        const cleanKey = key.slice(1);
-                        if ( cleanKey == customerReqKey[i]) {
-                            customerInDataBase[key] = customerRequest[customerReqKey[i]];
-                        } else  {
-                            new Error('No suitable key found');
-                        }
+                Object.getOwnPropertyNames(customerRequest).forEach(function(prop) {
+                    if (customerInDataBase[prop] !== undefined) {
+                        customerInDataBase[prop] =customerRequest[prop];
                     }
-                    const name = customerInDataBase.name;
-                    const surname = customerInDataBase.surname;
-                    const phone = customerInDataBase.phone;
-                    const email = customerInDataBase.email;
-                    const photo = customerInDataBase.photo;
-                    const password = customerInDataBase.password;
+                });
 
-                    console.log(customerInDataBase.id);
-                    const updateData = await this.customerRepository.updateCustomer(customerInDataBase, name, surname, phone, email, photo, password);
-                    response.json(updateData);
-                }
+                console.log(customerInDataBase.id);
+                const updateData = await this.customerRepository.updateCustomer(
+                    customerInDataBase
+                );
+                response.json(updateData);
+
             } else {
                 next(new Error('Not found customer with this id'));
             }
         } catch (e) {
+            console.log(e)
             next(new Error('Error update'));
         }
 

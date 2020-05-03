@@ -1,0 +1,21 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=food
+    volumes:
+      - ./migrations/:/docker-entrypoint-initdb.d/
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5436:5432
+    networks:
+      - app-network
+volumes:
+  postgres-data:
+networks:
+  app-network:
+    driver: bridge
