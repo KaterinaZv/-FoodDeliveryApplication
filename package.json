@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/server.js",
+    "dev": "nodemon server.js",
+    "lint": "eslint ./src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,17 @@
   "bugs": {
     "url": "https://github.com/KaterinaZv/-FoodDeliveryApplication/issues"
   },
-  "homepage": "https://github.com/KaterinaZv/-FoodDeliveryApplication#readme"
+  "homepage": "https://github.com/KaterinaZv/-FoodDeliveryApplication#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "nodemon": "^2.0.3"
+  }
 }
