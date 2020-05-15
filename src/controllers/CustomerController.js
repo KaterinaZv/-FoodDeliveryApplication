@@ -1,4 +1,4 @@
-import Customer from '../models/Customer.js';
+
 import { CustomerRepository } from '../repositories/CustomerRepository.js';
 
 
@@ -8,6 +8,7 @@ class CustomerController {
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
+        this.createCustomerAddress = this.createCustomerAddress.bind(this);
 
         this.customerRepository = new CustomerRepository(pool);
     }
@@ -29,19 +30,26 @@ class CustomerController {
 
     async create(request, response, next) {
 
-        const name = request.body.name;
-        const surname = request.body.surname;
-        const phone = request.body.phone;
         const email = request.body.email;
-        const photo = request.body.photo;
         const password = request.body.password;
 
-        const customer = await this.customerRepository.createCustomer(name, surname, phone, email, photo, password);
+        const customer = await this.customerRepository.createCustomer( email, password);
 
         response.send(customer);
     }
 
+    async createCustomerAddress(request, response, next) {
+
+        const customer_id = request.body.customer_id;
+        const address = request.body.address;
+
+        const customerAddress = await this.customerRepository.createCustomerAddress(customer_id, address);
+
+        response.send(customerAddress);
+    }
+
     async update(request, response, next) {
+        console.log(request);
         try {
             const { id } = request.params;
             const customerRequest = request.body;
@@ -55,7 +63,6 @@ class CustomerController {
                     }
                 });
 
-                console.log(customerInDataBase.id);
                 const updateData = await this.customerRepository.updateCustomer(
                     customerInDataBase
                 );

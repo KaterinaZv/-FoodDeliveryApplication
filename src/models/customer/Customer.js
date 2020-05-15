@@ -1,10 +1,9 @@
 class Customer {
   constructor({
-    id, name, surname, phone, email, photo, password,
+    id, name, phone, email, photo, password,
   }) {
     this._id = id;
     this._name = name;
-    this._surname = surname;
     this._phone = phone;
     this._email = email;
     this._photo = photo;
@@ -17,10 +16,6 @@ class Customer {
 
   get name() {
     return this._name;
-  }
-
-  get surname() {
-    return this._surname;
   }
 
   get phone() {
@@ -51,10 +46,6 @@ class Customer {
     this._name = newValue;
   }
 
-  set surname(newValue) {
-    this._surname = newValue;
-  }
-
   set phone(newValue) {
     this._phone = newValue;
   }
@@ -71,7 +62,6 @@ class Customer {
     return {
       id: this.id,
       name: this.name,
-      surname: this.surname,
       phone: this.phone,
       email: this.email,
       photo: this.photo,
