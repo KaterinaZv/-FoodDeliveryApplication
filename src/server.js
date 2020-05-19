@@ -2,6 +2,7 @@ import process from 'process';
 import express from 'express';
 import CustomerRouter from './routers/CustomerRouter.js';
 import pool from './database.js';
+import RestaurantRouter from './routers/RestaurantRouter.js';
 
 const app = express();
 
@@ -14,4 +15,9 @@ const server = app.listen(PORT, async () => {
 
   const customerRouter = new CustomerRouter(pool);
   app.use('/customers', customerRouter.router);
+
+  const restaurantRouter = new RestaurantRouter(pool);
+  app.use('/restaurants', restaurantRouter.router);
 });
+
+

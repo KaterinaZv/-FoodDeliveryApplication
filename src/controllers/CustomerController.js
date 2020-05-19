@@ -1,4 +1,4 @@
-import Customer from '../models/Customer.js';
+
 import { CustomerRepository } from '../repositories/CustomerRepository.js';
 
 
@@ -8,6 +8,7 @@ class CustomerController {
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
+        this.createCustomerAddress = this.createCustomerAddress.bind(this);
 
         this.customerRepository = new CustomerRepository(pool);
     }
@@ -29,19 +30,26 @@ class CustomerController {
 
     async create(request, response, next) {
 
-        const name = request.body.name;
-        const surname = request.body.surname;
-        const phone = request.body.phone;
         const email = request.body.email;
-        const photo = request.body.photo;
         const password = request.body.password;
 
-        const customer = await this.customerRepository.createCustomer(name, surname, phone, email, photo, password);
+        const customer = await this.customerRepository.createCustomer( email, password);
 
         response.send(customer);
     }
 
+    async createCustomerAddress(request, response, next) {
+
+        const customer_id = request.body.customer_id;
+        const address = request.body.address;
+
+        const customerAddress = await this.customerRepository.createCustomerAddress(customer_id, address);
+
+        response.send(customerAddress);
+    }
+
     async update(request, response, next) {
+        console.log(request);
         try {
             const { id } = request.params;
             const customerRequest = request.body;
@@ -49,31 +57,22 @@ class CustomerController {
             if (id) {
                 const customerInDataBase = await this.customerRepository.getCustomerById(id);
 
-                const customerReqKey = Object.keys(customerRequest);
-                for (var i = 0, l = customerReqKey.length; i < l; i++) {
-                    for (let key in customerInDataBase) {
-                        const cleanKey = key.slice(1);
-                        if ( cleanKey == customerReqKey[i]) {
-                            customerInDataBase[key] = customerRequest[customerReqKey[i]];
-                        } else  {
-                            new Error('No suitable key found');
-                        }
+                Object.getOwnPropertyNames(customerRequest).forEach(function(prop) {
+                    if (customerInDataBase[prop] !== undefined) {
+                        customerInDataBase[prop] =customerRequest[prop];
                     }
-                    const name = customerInDataBase.name;
-                    const surname = customerInDataBase.surname;
-                    const phone = customerInDataBase.phone;
-                    const email = customerInDataBase.email;
-                    const photo = customerInDataBase.photo;
-                    const password = customerInDataBase.password;
+                });
 
-                    console.log(customerInDataBase.id);
-                    const updateData = await this.customerRepository.updateCustomer(customerInDataBase, name, surname, phone, email, photo, password);
-                    response.json(updateData);
-                }
+                const updateData = await this.customerRepository.updateCustomer(
+                    customerInDataBase
+                );
+                response.json(updateData);
+
             } else {
                 next(new Error('Not found customer with this id'));
             }
         } catch (e) {
+            console.log(e)
             next(new Error('Error update'));
         }
 

@@ -1,4 +1,6 @@
-import Customer from '../models/Customer.js';
+import Customer from '../models/customer/Customer.js';
+
+import CustomerAddress from '../models/customer/CustomerAddress.js';
 
 export class CustomerRepository {
     constructor(pool) {
@@ -11,11 +13,7 @@ export class CustomerRepository {
 
         let customer = new Customer({
             id: rawCustomer.rows[0].id,
-            name: rawCustomer.rows[0].name,
-            surname: rawCustomer.rows[0].surname,
-            phone: rawCustomer.rows[0].phone,
             email: rawCustomer.rows[0].email,
-            photo: rawCustomer.rows[0].photo
         })
 
         return customer;
@@ -27,48 +25,54 @@ export class CustomerRepository {
 
         let customer = new Customer({
             id: rawCustomer.rows[0].id,
-            name: rawCustomer.rows[0].name,
-            surname: rawCustomer.rows[0].surname,
-            phone: rawCustomer.rows[0].phone,
             email: rawCustomer.rows[0].email,
-            photo: rawCustomer.rows[0].photo
         });
 
         return customer;
     }
 
-    async createCustomer(name, surname, phone, email, photo, password) {
+    async createCustomer(email, password) {
         const rawCustomer = await this._pool.query(
-            'INSERT INTO public."customer" (name, surname, phone, email, photo, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', [name, surname, phone, email, photo, password]);
+            'INSERT INTO public."customer" (email, password) VALUES ($1, $2) RETURNING *;', [email, password]);
 
     let customer = new Customer({
         id: rawCustomer.rows[0].id,
-        name: rawCustomer.rows[0].name,
-        surname: rawCustomer.rows[0].surname,
-        phone: rawCustomer.rows[0].phone,
         email: rawCustomer.rows[0].email,
-        photo: rawCustomer.rows[0].photo,
-        password: rawCustomer.rows[0].password
     });
-
         return customer;
     }
 
-    async updateCustomer(customer, name, surname, phone, email, photo, password) {
-        
-        const customerRaw = await this._pool.query('UPDATE public."customer" SET name=$2, surname=$3, phone=$4, email=$5, photo=$6, password=$7 WHERE id=$1 RETURNING *;', [customer.id, name, surname, phone, email, photo, password]);
+    async updateCustomer(customer) {
 
-        console.log(customerRaw);
+        const customerRaw = await this._pool.query('UPDATE public."customer" SET name=$2, surname=$3, phone=$4, email=$5, photo=$6 WHERE id=$1 RETURNING *;', [
+            customer.id,
+            customer.name,
+            customer.phone,
+            customer.email,
+        ]);
+
+        //console.log(customerRaw);
 
         return new Customer({
             id: customerRaw.rows[0].id,
             name: customerRaw.rows[0].name,
-            surname: customerRaw.rows[0].surname,
             phone: customerRaw.rows[0].phone,
             email: customerRaw.rows[0].email,
-            photo: customerRaw.rows[0].photo,
             password: customerRaw.rows[0].password
         })
+
+    }
+
+    async createCustomerAddress(customer_id, address) {
+        const rawId = await this._pool.query('SELECT id FROM public."customer" WHERE id=$1', [customer_id]);
+
+        const customerAddressRaw = await this._pool.query('INSERT INTO public."customer_address" (customer_id, address) VALUES ($1, $2) RETURNING *;', [rawId.rows[0].id, address]);
+
+        return new CustomerAddress ({
+            id: customerAddressRaw.rows[0].id,
+            customer_id: customerAddressRaw.rows[0].customer_id,
+            address: customerAddressRaw.rows[0].address,
+        });
 
     }
 }
