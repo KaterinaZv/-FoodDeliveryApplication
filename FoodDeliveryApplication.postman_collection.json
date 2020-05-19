@@ -10,31 +10,18 @@
 			"item": [
 				{
 					"name": "get customers",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\": \"begeza@scary.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3000/customers/farmiga@scary.com",
+							"raw": "http://localhost:3000/customers",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"customers",
-								"farmiga@scary.com"
+								"customers"
 							]
 						}
 					},
@@ -45,15 +32,6 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"begeza@scary.com\",\n  \"password\": \"turisrt\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:3000/customers",
 							"protocol": "http",
@@ -73,17 +51,8 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Milla\",\n\t\"phone\": \"89965432312\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3000/customers/9",
+							"raw": "http://localhost:3000/customers/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -91,7 +60,7 @@
 							"port": "3000",
 							"path": [
 								"customers",
-								"9"
+								"1"
 							]
 						}
 					},
@@ -111,153 +80,6 @@
 							"port": "3000",
 							"path": [
 								"customers",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post CustomerAddress",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"customer_id\": 9,\n\t\"address\": \"ленина 5\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/customers/9/address",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"customers",
-								"9",
-								"address"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all restaurant",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3000/restaurants",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"restaurants"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Restaurant",
-			"item": [
-				{
-					"name": "Get Restaurant Admin",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3000/restaurants/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"restaurants",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post restaurant",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Wine and Crub\",\n\t\"phone\": \"84595643423\",\n\t\"email\": \"wine@gropp.com\",\n\t\"description\": \"вкусное вино с камчатскими крабами\",\n\t\"password\": \"lubyanka\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/restaurants/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"restaurants",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT Restaurant",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Wine&Crub\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/restaurants/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"restaurants",
 								"1"
 							]
 						}
