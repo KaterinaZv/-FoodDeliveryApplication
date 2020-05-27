@@ -1,12 +1,18 @@
 version: '3'
 services:
+  app:
+    build: .
+    networks:
+      - app-network
+    ports:
+    - 3000:3000
   postgres:
     image: postgres:12
     restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=food
+      - POSTGRES_DB=FoodDelivery
     volumes:
       - ./migrations/:/docker-entrypoint-initdb.d/
       - postgres-data:/var/lib/postgresql/data
