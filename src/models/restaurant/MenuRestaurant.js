@@ -1,14 +1,13 @@
-class Restaurant {
+class MenuRestaurant {
     constructor({
-        id, name, phone, email, photo, description, password,
+        id, restaurantId, name, description, price, photo
     }) {
         this._id = id;
+        this._restaurantId = restaurantId;
         this._name = name;
-        this._phone = phone;
-        this._email = email;
-        this._photo = photo;
         this._description = description;
-        this._password = password;
+        this._price = price;
+        this._photo = photo;
     }
 
     get id() {
@@ -19,16 +18,12 @@ class Restaurant {
         return this._name;
     }
 
-    get phone() {
-        return this._phone;
+    get restaurantId() {
+        return this._restaurantId;
     }
 
-    get email() {
-        return this._email;
-    }
-
-    get password() {
-        return this._password;
+    get price() {
+        return this._price;
     }
 
     get photo() {
@@ -47,33 +42,28 @@ class Restaurant {
         this._name = newValue;
     }
 
-    set phone(newValue) {
-        this._phone = newValue;
-    }
-
-    set photo(newValue) {
-        this._photo = newValue;
-    }
-
-    set email(newValue) {
-        this._email = newValue;
+    set price(newValue) {
+        this._price = newValue;
     }
 
     set description(newValue) {
         this._description = newValue;
     }
 
+    set restaurantId(newValue) {
+        this._restaurantId = newValue;
+    }
+
     toJSON() {
         return {
             id: this.id,
+            restaurantId: this.restaurantId,
             name: this.name,
-            phone: this.phone,
-            email: this.email,
-            photo: this.photo,
             description: this.description,
-            password: this.password,
+            price: this.price,
+            photo: this.photo,
         };
     }
 }
 
-export default Restaurant;
+export default MenuRestaurant;

@@ -1,7 +1,7 @@
 class CustomerAddress {
-    constructor({ id, customer_id ,address }) {
+    constructor({ id, customerId, address }) {
         this._id = id;
-        this._customer_id = customer_id;
+        this._customerId = customerId;
         this._address = address;
     }
 
@@ -9,22 +9,22 @@ class CustomerAddress {
         return this._id;
     }
 
-    get customer_id() {
-        return this._customer_id;
+    get customerId() {
+        return this._customerId;
     }
 
     get address() {
         return this._address;
     }
 
-    set addres(newValue) {
+    set address(newValue) {
         this._address = newValue;
     }
 
     toJSON() {
         return {
             id: this.id,
-            customer_id: this.customer_id,
+            customerId: this.customerId,
             address: this.address,
         };
     }

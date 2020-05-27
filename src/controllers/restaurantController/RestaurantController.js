@@ -1,5 +1,5 @@
-import { RestaurantRepository } from '../repositories/RestaurantRepository.js';
 
+import RestaurantRepository from '../../repositories/restaurantRepository/RestaurantRepository.js';
 
 class RestaurantController {
     constructor(pool) {
@@ -12,13 +12,14 @@ class RestaurantController {
         this.restaurantRepository = new RestaurantRepository(pool);
     }
 
-    async getRestaurant(request, response, next) {
+    async getRestaurant(request, response) {
         const restaurant = await this.restaurantRepository.getRestaurant();
         response.json(restaurant);
     }
 
     async getRestaurantById(request, response, next) {
         try {
+            // eslint-disable-next-line camelcase
             const restaurant_id = request.params.id;
             const restaurant = await this.restaurantRepository.getRestaurantById(restaurant_id);
             response.send({ restaurant });
@@ -27,13 +28,12 @@ class RestaurantController {
         }
     }
 
-    async create(request, response, next) {
-
-        const name = request.body.name;
-        const phone = request.body.phone;
-        const email = request.body.email;
-        const description = request.body.description;
-        const password = request.body.password;
+    async create(request, response) {
+        const { name } = request.body;
+        const { phone } = request.body;
+        const { email } = request.body;
+        const { description } = request.body;
+        const { password } = request.body;
 
         const restaurant = await this.restaurantRepository.createRestaurant(name, phone, email, description, password);
 
@@ -48,30 +48,27 @@ class RestaurantController {
             if (id) {
                 const restaurantInDataBase = await this.restaurantRepository.getRestaurantById(id);
 
-                Object.getOwnPropertyNames(restaurantRequest).forEach(function (prop) {
+                Object.getOwnPropertyNames(restaurantRequest).forEach((prop) => {
                     if (restaurantInDataBase[prop] !== undefined) {
                         restaurantInDataBase[prop] = restaurantRequest[prop];
                     }
                 });
 
-                //console.log(restaurantInDataBase.id);
                 const updateData = await this.restaurantRepository.updateRestaurant(
-                    restaurantInDataBase
+                    restaurantInDataBase,
                 );
                 response.json(updateData);
-
             } else {
                 next(new Error('Not found restaurant with this id'));
             }
         } catch (e) {
-            console.log(e)
+            console.log(e);
             next(new Error('Error update'));
         }
-
     }
 
-    delete(request, response, next) {
-        response.send('Delete customer')
+    delete(request, response) {
+        response.send('Delete customer');
     }
 }
 

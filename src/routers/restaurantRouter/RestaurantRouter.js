@@ -1,10 +1,9 @@
 import express from 'express';
-import RestaurantController from '../controllers/RestaurantController.js';
+import RestaurantController from '../../controllers/restaurantController/RestaurantController.js';
 
 class RestaurantRouter {
-    _router = express.Router();
-
     constructor(pool) {
+        this._router = express.Router();
         this._restaurantController = new RestaurantController(pool);
 
         this._router.route('/:id').get(this._restaurantController.getRestaurantById);
@@ -17,6 +16,6 @@ class RestaurantRouter {
     get router() {
         return this._router;
     }
-
 }
+
 export default RestaurantRouter;
