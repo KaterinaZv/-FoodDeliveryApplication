@@ -13,6 +13,8 @@ class CustomerController {
         this.getCustomerAddress = this.getCustomerAddress.bind(this);
         this.createCustomerRestaurant = this.createCustomerRestaurant.bind(this);
         this.getCustomerRestaurant = this.getCustomerRestaurant.bind(this);
+        this.deleteCustomerAddress = this.deleteCustomerAddress.bind(this);
+        this.deleteCustomerRestaurant = this.deleteCustomerRestaurant.bind(this);
 
         this.customerRepository = new CustomerRepository(pool);
     }
@@ -117,6 +119,17 @@ class CustomerController {
         response.send(customerAddress);
     }
 
+    async deleteCustomerAddress(request, response) {
+        const { id } = request.params;
+        const { address } = request.body;
+        try {
+            await this.customerRepository.deleteCustomerAddress(id, address);
+            response.send('Address removed');
+        } catch (e) {
+            response.status(500).send(e.message);
+        }
+    }
+
     async createCustomerRestaurant(request, response) {
         try {
             const { id } = request.params;
@@ -139,6 +152,17 @@ class CustomerController {
         } catch (e) {
             console.log(e);
             next(new Error('Error get favor restaurants'));
+        }
+    }
+
+    async deleteCustomerRestaurant(request, response) {
+        const { id } = request.params;
+        const { restaurantName } = request.body;
+        try {
+            await this.customerRepository.deleteCustomerRestaurant(id, restaurantName);
+            response.send('Restaurant removed');
+        } catch (e) {
+            response.status(500).send(e.message);
         }
     }
 }

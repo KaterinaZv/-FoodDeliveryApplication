@@ -21,9 +21,12 @@ class CustomerRouter {
 
         this._router.route('/:id/address').post(this._security.checkCustomer, this._customerController.createCustomerAddress);
         this._router.route('/:id/address').get(this._security.checkCustomer, this._customerController.getCustomerAddress);
+        this._router.route('/:id/address').delete(this._security.checkCustomer, this._customerController.deleteCustomerAddress);
+
 
         this._router.route('/:id/favorRestaurant').post(this._security.checkCustomer, this._customerController.createCustomerRestaurant);
         this._router.route('/:id/favorRestaurant').get(this._security.checkCustomer, this._customerController.getCustomerRestaurant);
+        this._router.route('/:id/favorRestaurant').delete(this._security.checkCustomer, this._customerController.deleteCustomerRestaurant);
 
         this._router.route('/:id/basket/order').post(this._security.checkCustomer, this._orderController.create);
         this._router.route('/:id/basket/order').get(this._security.checkCustomer, this._orderController.get);

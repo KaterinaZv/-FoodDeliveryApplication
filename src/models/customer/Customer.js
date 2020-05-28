@@ -1,6 +1,6 @@
 class Customer {
     constructor({
-        id, name, phone, email, photo
+        id, name, phone, email, photo,
     }) {
         this._id = id;
         this._name = name;

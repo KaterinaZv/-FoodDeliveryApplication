@@ -6,3 +6,4 @@ migration/
 docker-compose.yml
 Dockerfile
 build.sh
+coverage/

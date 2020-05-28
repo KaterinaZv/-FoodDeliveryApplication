@@ -101,6 +101,14 @@ class CustomerRepository {
         return customerAddresses;
     }
 
+    async deleteCustomerAddress(id, address) {
+        const result = await this._pool.query('DELETE FROM public."customer_address" WHERE customer_id=$1 AND address=$2 RETURNING *;', [id, address]);
+
+        if (result.rows.length === 0) {
+            throw Error('Error on delete address');
+        }
+    }
+
     async createCustomerRestaurant(customerId, restaurantName) {
         const rawRestaurantId = await this._pool.query('SELECT id FROM public."restaurant" WHERE name=$1;', [restaurantName]);
 
@@ -125,6 +133,14 @@ class CustomerRepository {
             customerRestaurants.push(restaurantList);
         });
         return customerRestaurants;
+    }
+
+    async deleteCustomerRestaurant(id, restaurantName) {
+        const result = await this._pool.query('DELETE FROM public."customer_restaurants" WHERE customer_id=$1 AND restaurant_name=$2 RETURNING *;', [id, restaurantName]);
+
+        if (result.rows.length === 0) {
+            throw Error('Error on delete restaurant');
+        }
     }
 }
 

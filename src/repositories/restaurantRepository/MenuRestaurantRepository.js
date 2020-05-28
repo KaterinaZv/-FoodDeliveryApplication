@@ -7,15 +7,19 @@ class MenuRestaurantRepository {
     }
 
     async getMenuRestaurantById(restaurantId) {
-        const rawMenuRestaurant = await this._pool.query('SELECT * FROM public."menu_restaurant" WHERE restaurant_id=$1;', [restaurantId]);
+        const menuRestaurant = [];
+        const items = await this._pool.query('SELECT * FROM public."menu_restaurant" WHERE restaurant_id=$1;', [restaurantId]);
 
-        const menuRestaurant = new MenuRestaurant({
-            id: rawMenuRestaurant.rows[0].id,
-            restaurantId,
-            name: rawMenuRestaurant.rows[0].name,
-            description: rawMenuRestaurant.rows[0].description,
-            price: rawMenuRestaurant.rows[0].price,
-            photo: rawMenuRestaurant.rows[0].photo,
+        items.rows.forEach((item) => {
+            const menuItem = new MenuRestaurant({
+                id: item.id,
+                restaurantId,
+                name: item.name,
+                description: item.description,
+                price: item.price,
+                photo: item.photo,
+            });
+            menuRestaurant.push(menuItem);
         });
 
         return menuRestaurant;

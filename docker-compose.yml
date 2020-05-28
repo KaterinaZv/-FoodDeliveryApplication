@@ -5,7 +5,7 @@ services:
     networks:
       - app-network
     ports:
-    - 3000:3000
+      - 3000:3000
   postgres:
     image: postgres:12
     restart: always
@@ -17,11 +17,12 @@ services:
       - ./migrations/:/docker-entrypoint-initdb.d/
       - postgres-data:/var/lib/postgresql/data
     ports:
-      - 5436:5432
+      - 5432:5432
+      - 50976:50976
     networks:
       - app-network
 volumes:
   postgres-data:
 networks:
-  app-network:
+  app-network:  
     driver: bridge
