@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/server.js",
+    "babel-node": "babel-node",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build",
+    "eslint": "./node_modules/.bin/eslint src/**/*.js",
+    "eslint:fix": "eslint src/**/*.js --fix",
+    "test": "jest --coverage --passWithNoTests"
   },
   "repository": {
     "type": "git",
@@ -15,5 +22,26 @@
   "bugs": {
     "url": "https://github.com/KaterinaZv/-FoodDeliveryApplication/issues"
   },
-  "homepage": "https://github.com/KaterinaZv/-FoodDeliveryApplication#readme"
+  "homepage": "https://github.com/KaterinaZv/-FoodDeliveryApplication#readme",
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "8.5.1",
+    "pg": "^8.0.3",
+    "supertest": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "babel-jest": "^25.3.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^25.3.0"
+  },
+  "jest": {
+    "verbose": true
+  }
 }
